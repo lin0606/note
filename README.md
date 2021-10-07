@@ -6,3 +6,7 @@
 
 [代码调试](https://github.com/lin0606/note/blob/main/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/debugger.md)
 
+## Vue
+
+[vuex](https://github.com/lin0606/note/blob/main/Vue/Vuex.md)
+
