@@ -11,9 +11,9 @@
 | v-show                          | 是否展示，切换元素的display值                                |
 | v-if<br />v-else<br />v-else-if | 条件渲染，根据条件判断需要挂载那个元素                       |
 | v-for                           | 循环遍历                                                     |
-| v-on                            | 绑定事件监听器，缩写@                                        |
+| v-on                            | 绑定事件监听器，缩写@ <br />可以添加自己需要的修饰符，如.stop, .prevent, .once, .enter等 |
 | v-bind                          | 动态绑定一个或多个attribute, 或一个组件prop到表达式， 缩写： |
-| v-model                         | [v-model原理]()                                              |
+| v-model                         | 主要有如下三个修饰符：<br />.lazy: 监听 `change` 而不是 `input` 事件<br />.number: 输入字符串转为有效的数字<br />.trim: 输入首尾空格过滤<br />[v-model原理]() |
 | v-slot                          | 详情看我写的插槽介绍文章<br />[vue3插槽介绍]()               |
 | v-pre                           | 跳过这个元素和它的子元素的编译过程                           |
 | v-once                          | 只渲染元素和组件**一次**。<br />随后的重新渲染，元素/组件及其所有的子节点将被视为静态内容并跳过。 |
@@ -199,4 +199,8 @@ const app = createApp(App)
 directives(app)
 app.mount('#app')
 ```
+
+## 参考
+
+[basin的博客](https://godbasin.github.io/vue-ebook/vue-ebook/5.html#_5-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4)
 
