@@ -15,3 +15,6 @@
 [Vue3通信方式介绍](https://github.com/lin0606/note/blob/main/Vue/vue3%E9%80%9A%E4%BF%A1.md)
 
 [Vue3指令介绍](https://github.com/lin0606/note/blob/main/Vue/vue3%E6%8C%87%E4%BB%A4.md)
+
+[VueRouter介绍](https://github.com/lin0606/note/blob/main/Vue/VueRouter.md)
+
