@@ -6,6 +6,8 @@
 
 [代码调试](https://github.com/lin0606/note/blob/main/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/debugger.md)
 
+[浏览器的事件循环](https://github.com/lin0606/note/blob/main/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.md)
+
 ## Vue
 
 [vuex](https://github.com/lin0606/note/blob/main/Vue/Vuex.md)
