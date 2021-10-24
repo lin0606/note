@@ -111,11 +111,20 @@ function ensuerSlash() {
 }
 ```
 
-
-
 ## history模式
 
-...
+history路由模式，主要依赖history对象，该对象是挂载到window.history属性上的。history对象提供了操作浏览器绘画历史的接口，使用window.history我们可以实现以下与路由相关的重要能力：
 
+1. 在history中跳转
 
+使用`window.history.back()`、`window.history.forward()`和`window.history.go()`方法来完成在用户历史记录中向后和向前的跳转。
 
+2. 添加和修改历史记录中的条目
+
+HTML5 引入了`history.pushState()`和`history.replaceState()`方法，它们分别可以添加和修改历史记录条目。这两个 API 都会操作浏览器的历史栈，而不会引起页面的刷新。区别在于，`pushState()`会增加一条新的历史记录，而`replaceState()`则会替换当前的历史记录：
+
+3. 监听popstate事件
+
+当同一个页面在历史记录间切换时，就会产生`popstate`事件，我们可以通过监听`window.onpopstate`来获取事件对象。
+
+上面介绍的`history.pushState()`或者`history.replaceState()`调用不会触发`popstate`事件，`popstate`事件只会在浏览器某些行为下触发, 比如点击后退、前进按钮(或者在 JavaScript 中调用`history.back()`、`history.forward()`、`history.go()`方法)。所以我们可以结合`popstate`事件、`pushState()`和`replaceState()`来完成完整的路由监听和修改能力。
