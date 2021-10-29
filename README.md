@@ -28,3 +28,6 @@
 
 [node的事件循环](https://github.com/lin0606/note/blob/main/Node/node%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.md)
 
+## 网络杂谈
+
+[CDN介绍](https://github.com/lin0606/note/blob/main/Network/CDN%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D.md)
