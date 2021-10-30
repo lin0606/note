@@ -1,10 +1,10 @@
 ![image-20211026220005281](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20211026220005281.png)
 
-### init（初始化）和$mount（挂载）
+## init（初始化）和$mount（挂载）
 
 init会初始化生命周期，data，watch和methods等，对数据进行【**响应式化**】。通过object.defineProperty设置`getter`和`setter`来实现**响应式**和**依赖收集**。`$mount`会挂载组件。如果是运行时编译，即不存在render function但是存在template，需要进行编译。
 
-### compile
+## compile
 
 compile经历三个阶段，得到render function
 
@@ -22,13 +22,13 @@ compile经历三个阶段，得到render function
 
   经历三个阶段后，组件中存在渲染VNode需要的render function了。
 
-### 响应式（render function）
+## 响应式（render function）
 
 render function被渲染时，会读取所需的值，触发**getter**函数进行**依赖收集**（让某个数据，比如说data知道有哪些地方依赖它，自己变化的时候需要通知他们），让所有用到这个data的组件（观察者watcher对象）存放到当前的**订阅者Dep**的subs中（**addSub**方法）。
 
 在修改对象的值的时候，会触发对应的 **setter**，通知之前「**依赖收集**」得到的 Dep 中的每一个 Watcher，调用Dep中的**notify**方法，告诉它们自己的值改变了，需要重新渲染视图。这时候这些 Watcher 就会开始调用 `update` 来更新视图，当然这中间还有一个 **`patch`** 的过程以及使用**队列来异步更新**的策略。
 
-#### 订阅者Dep
+### 订阅者Dep
 
 ```js
 class Dep{
@@ -49,7 +49,7 @@ class Dep{
 }
 ```
 
-#### 观察者Watcher
+### 观察者Watcher
 
 ```js
 class Watcher{
@@ -65,7 +65,7 @@ class Watcher{
 Dep.target = null;
 ```
 
-#### 依赖收集
+### 依赖收集
 
 ```js
 function defineReactive(obj,key,val){
@@ -98,11 +98,11 @@ class Vue {
 
 setter->Dep->watcher->patch->视图
 
-#### patch过程（diff算法）
+### patch过程（diff算法）
 
 diff算法是通过**同层**的树节点进行比较，时间复杂度为O(n)。`patch` 的主要功能是比对两个 VNode 节点，将「差异」更新到视图上。
 
-##### patch
+#### patch
 
 **function patch(oldVnode, vnode, parentElm)**
 
@@ -133,7 +133,7 @@ function patch (oldVnode, vnode, parentElm) {
 
 
 
-##### sameVnode
+#### sameVnode
 
 当key，tag，isComment（是否为注释节点），data同时定义（或不定义），input标签的type相同
 
@@ -159,7 +159,7 @@ function sameInputType (a, b) {
 
 
 
-##### patchVnode
+#### patchVnode
 
 1. 在新老节点相同情况下，直接return
 
@@ -208,7 +208,7 @@ function patchVnode (oldVnode, vnode) {
 
 
 
-##### updateChildren
+#### updateChildren
 
 ![image-20211030154034551](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20211030154034551.png)
 
@@ -303,11 +303,11 @@ function updateChildren (parentElm, oldCh, newCh) {
 
 
 
-### Virtual DOM
+## Virtual DOM
 
 render function会被转化成VNode节点。Virtual DOM 就是一颗以JavaScript对象（VNode节点）作为基础的树,用对象属性来描述节点，实际上它只是一层对真实DOM的抽象。最终可以通过**一系列操作**<font color="red">（这里的操作是patch？）</font>使这棵树映射到真实环境上。由于 Virtual DOM 是以 JavaScript 对象为基础而不依赖真实平台环境，所以使它具有了跨平台的能力，比如说浏览器平台、Weex、Node 等。
 
-### 批量异步更新和nextTick
+## 批量异步更新和nextTick
 
 
 
