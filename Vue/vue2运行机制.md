@@ -1,4 +1,4 @@
-![image-20211026220005281](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20211026220005281.png)
+![image](https://img-blog.csdn.net/20180912124653153?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21hbmd4aTgyMDA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 ## init（初始化）和$mount（挂载）
 
