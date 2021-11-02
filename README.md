@@ -24,6 +24,8 @@
 
 [Vue生命周期](https://github.com/lin0606/note/blob/main/Vue/vue2%26vue3%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.md)
 
+[VueNexttick介绍](https://github.com/lin0606/note/blob/main/Vue/vue%24nextTick.md)
+
 ## Node
 
 [node的事件循环](https://github.com/lin0606/note/blob/main/Node/node%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF.md)
