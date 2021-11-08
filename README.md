@@ -34,6 +34,8 @@
 
 [模块：buffer](https://github.com/lin0606/note/blob/main/Node/buffer%E6%A8%A1%E5%9D%97.md)
 
+[模块：stream](https://github.com/lin0606/note/blob/main/Node/stream%E6%A8%A1%E5%9D%97.md)
+
 ## 网络杂谈
 
 [CDN介绍](https://github.com/lin0606/note/blob/main/Network/CDN%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D.md)
