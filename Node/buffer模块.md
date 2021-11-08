@@ -131,6 +131,8 @@ console.log(buf.toString('hex')); // 68656c6c6f20776f726c64
 
 由于 Buffer 需要处理的是大量的二进制数据，假如用一点就向系统去申请，则会造成频繁的向系统申请内存调用，所以 Buffer 所占用的内存**不再由 V8 分配**，而是在 Node.js 的 **C++ 层面完成申请**，在 **JavaScript 中进行内存分配**。因此，这部分内存我们称之为**堆外内存**。
 
+**下面为内存分配总结：**
+
 1. 在初次加载时就会初始化 1 个 **8KB 的内存空间**，buffer.js 源码有体现
 2. 根据申请的内存大小分为 **小 Buffer 对象** 和 **大 Buffer 对象**
 3. 小 Buffer 情况，会继续判断这个 slab 空间是否足够
@@ -138,3 +140,31 @@ console.log(buf.toString('hex')); // 68656c6c6f20776f726c64
    - 如果空间不足，slab 空间不足，就会去创建一个新的 slab 空间用来分配
 4. 大 Buffer 情况，则会直接走 createUnsafeBuffer(size) 函数
 5. 不论是小 Buffer 对象还是大 Buffer 对象，内存分配是在 C++ 层面完成，内存管理在 JavaScript 层面，最终还是可以被 V8 的垃圾回收标记所回收。
+
+## 图片copy小工具
+
+```javascript
+const fs = require('fs')
+
+// 通过 fs.readFile 读取图片时候，拿到的是缓冲的 Buffer 数据
+fs.readFile('img.png', (err, buffer) => {
+  console.log(Buffer.isBuffer(buffer) && 'readFile 读取图片拿到的是 Buffer 数据')
+  // 把读取到的 Buffer 数据，通过 fs writeFile 写入到一个新图片文件中
+  fs.writeFile('logo.png', buffer, function(err) {})
+
+  // 再基于原始的 Buffer 创建一个新的 Buffer，通过 toString base64 解码为字符串打印出来
+  const base64Image = Buffer.from(buffer).toString('base64')
+  console.log(base64Image)
+
+  // base64Image 是 base64 后的字符串，传参给 from，同时指定编码生成一个新的 Buffer 实例
+  const decodedImage = Buffer.from(base64Image, 'base64')
+
+  // 比较两个 Buffer 实例的数据，并写入到一个新的图片中
+  console.log(Buffer.compare(buffer, decodedImage))
+  fs.writeFile('img_decoded.jpg', decodedImage, (err) => {})
+})
+```
+
+## 参考
+
+https://github.com/qufei1993/Nodejs-Roadmap/blob/master/docs/nodejs/buffer.md
