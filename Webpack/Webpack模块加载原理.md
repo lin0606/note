@@ -13,7 +13,7 @@ webpack是模块打包器，它会将我们的每一个文件都看作是一个�
 console.log("start require");
 var lib = require("./lib");
 console.log("end require", lib);
-lib.minus(3, 2);
+console.log(lib.minus(3, 2));
 ```
 
 ```javascript
@@ -188,3 +188,112 @@ console.log(lib.minus(3, 2));
 从刚才的分析可知，`__webpack_require__()` 加载模块后，会先执行模块对应的函数，然后返回该模块的 `exports` 对象。所以入口模块能通过 `__webpack_require__()` 引入 `lib.js`中的minus函数并执行。
 
 到目前为止可以发现 webpack 自定义的模块规范完美适配 CommonJS 规范。
+
+## ES6 module
+
+我们将代码改为使用es6 模块规范进行导入和导出，再看看其与CommonJs进行打包后代码的不同。
+
+```javascript
+// index.js
+console.log("start require");
+import { minus } from "./lib.js";
+console.log("end require", minus);
+console.log(minus(3, 2));
+```
+
+```javascript
+// lib.js
+export const minus = function (a, b) {
+    return a - b;
+};
+```
+
+打包完成后发现，使用 ES6 module 规范打包后的代码和使用 CommonJS 规范打包后的代码绝大部分都是一样的。一样的地方是指 webpack 自定义模块规范的代码一样，唯一不同的是上面两个文件打包后的代码不同。
+
+```javascript
+{
+    "./src/index.js": function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        eval(
+            '__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _lib_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib.js */ "./src/lib.js");\nconsole.log("start require");\r\n\r\nconsole.log("end require", _lib_js__WEBPACK_IMPORTED_MODULE_0__["minus"]);\r\nconsole.log(Object(_lib_js__WEBPACK_IMPORTED_MODULE_0__["minus"])(3, 2));\r\n\n\n//# sourceURL=webpack:///./src/index.js?'
+        );
+    },
+
+    "./src/lib.js": function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        eval(
+            '__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "minus", function() { return minus; });\nconst minus = function (a, b) {\r\n  return a - b;\r\n};\n\n//# sourceURL=webpack:///./src/lib.js?'
+        );
+    },
+}
+```
+
+可以看到函数所传的第二个参数为`__webpack_exports_`,而commonjs里为`exports`。将执行代码的格式处理一下：
+
+```javascript
+// index.js
+__webpack_require__.r(__webpack_exports__);
+var _lib_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./src/lib.js");
+console.log("start require");
+console.log("end require", _lib_js__WEBPACK_IMPORTED_MODULE_0__["minus"])
+console.log(Object(_lib_js__WEBPACK_IMPORTED_MODULE_0__["minus"])(3, 2))
+//# sourceURL=webpack:///./src/index.js?
+```
+
+```javascript
+// lib.js
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, "minus", function() { return minus; });
+const minus = function (a, b) { return a - b; };
+//# sourceURL=webpack:///./src/lib.js?
+```
+
+我们可以发现，每个模块的开头都会执行`__webpack_require__.r(__webpack_exports__);`这条语句，对于lib.js其还多出了`__webpack_require__.d()`函数。下面我们就分别看看这两个函数：
+
+### __webpack_require__.d()
+
+```javascript
+// define getter function for harmony exports
+__webpack_require__.d = function (exports, name, getter) {
+    if (!__webpack_require__.o(exports, name)) {
+        Object.defineProperty(exports, name, {
+            enumerable: true,
+            get: getter,
+        });
+    }
+};
+```
+
+可以看出该函数是为`__webpack_exports__`定义其所导出的变量。在打包后的lib.js代码中我们可以看到其调用：
+
+```javascript
+__webpack_require__.d(__webpack_exports__, "minus", function() { return minus; });
+```
+
+我们可以将其看作为
+
+```javascript
+__webpack_exports__[minus] = function() { return minus };
+```
+
+如果我们使用export default 进行导出，打包后的代码会是这样：
+
+```javascript
+__webpack_require__.d(__webpack_exports__, "default", function() { return minus; });
+```
+
+### __webpack_require__.r()
+
+```javascript
+// define __esModule on exports
+__webpack_require__.r = function (exports) {
+    if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
+        Object.defineProperty(exports, Symbol.toStringTag, {
+            value: "Module",
+        });
+    }
+    Object.defineProperty(exports, "__esModule", { value: true });
+};
+```
+
+`__webpack_require__.r()` 函数的作用是给 `__webpack_exports__` 添加一个 `__esModule` 为 `true` 的属性，表示这是一个 ES6 module。添加该属性的主要作用在于**处理混合使用 ES6 module 和 CommonJS 的情况。**
