@@ -46,13 +46,25 @@
 
 ### loader与plugin
 
-1. loader与plugin都是为了扩展webpack的功能。
+#### loader
 
-2. loader只是作用于文件，为了文件的转换。
+什么是 loader？它是一个转换器，用于对源代码进行转换。例如使用 `babel-loader` 可以将 ES6 代码转换为 ES5 代码；`sass-loader` 将 sass 代码转换为 css 代码。
 
-3. plugin不会直接作用于文件，而是监听webpack在全周期的事件，可以理解为不同周期内的拦截器。
+其实 loader 并不复杂，很容易就能写一个 loader。下面就是一个简单的 loader，它的作用是将代码中的 `var` 关键词替换为 `const`：
 
-4. 执行顺序差异，loader会先于plugin执行。
+```javascript
+module.exports = function (source) {
+    return source.replace(/var/g, 'const') // var a = 1; 将被转换为 const a = 1;
+}
+```
+
+#### plugin
+
+webpack 在整个编译周期中会触发很多不同的事件，plugin 可以监听这些事件，并且可以调用 webpack 的 API 对输出资源进行处理。
+
+这是它和 loader 的不同之处，loader 一般只能对源文件代码进行转换，而 plugin 可以做得更多。plugin 在整个编译周期中都可以被调用，只要监听事件。
+
+例如 `html-webpack-plugin` 插件在编译完成后自动的将资源 URL 插入到 html 文件。
 
 ### sourceMap配置差异
 
