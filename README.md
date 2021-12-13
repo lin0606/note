@@ -44,6 +44,8 @@
 
 [webpack基础点总结](https://github.com/lin0606/note/blob/main/Webpack/Webpack%E5%9F%BA%E7%A1%80%E7%82%B9%E6%80%BB%E7%BB%93.md)
 
+[webpack优化总结](https://github.com/lin0606/note/blob/main/Webpack/Webpack%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93.md)
+
 [webpack加载原理](https://github.com/lin0606/note/blob/main/Webpack/Webpack%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86.md)
 
 ## 网络杂谈
