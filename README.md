@@ -40,6 +40,10 @@
 
 [模块：net](https://github.com/lin0606/note/blob/main/Node/net%E6%A8%A1%E5%9D%97.md)
 
+## Typescript
+
+[ts基础知识总结](https://github.com/lin0606/note/blob/main/Typescript/base.md)
+
 ## Webpack
 
 [webpack基础点总结](https://github.com/lin0606/note/blob/main/Webpack/Webpack%E5%9F%BA%E7%A1%80%E7%82%B9%E6%80%BB%E7%BB%93.md)
